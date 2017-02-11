@@ -24,16 +24,20 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::configureMenu() {
     QMenu *file = menuBar()->addMenu(tr("&File"));
-    QAction *save = file->addAction("&Save");
-    QAction *load = file->addAction("&Load");
+    QAction *save = file->addAction(tr("&Save"));
+    QAction *load = file->addAction(tr("&Load"));
 
-    QMenu *actions = menuBar()->addMenu(tr("&Actions"));
+    QMenu *edit = menuBar()->addMenu(tr("&Edit"));
 
-    QMenu *del = actions->addMenu(tr("&Delete"));
-    QMenu *copy = actions->addMenu(tr("&Copy"));
-    QMenu *move = actions->addMenu(tr("&Move"));
-    actions->addSeparator();
-    QAction *changFillingeMode = actions->addAction(tr("Change Filling Mode"));
+    QAction *undo = edit->addAction(tr("&Undo"));
+    QAction *changFillingeMode = edit->addAction(tr("Change Filling Mode"));
+
+    edit->addSeparator();
+
+    QMenu *del = edit->addMenu(tr("&Delete"));
+    QMenu *copy = edit->addMenu(tr("&Copy"));
+    QMenu *move = edit->addMenu(tr("&Move"));
+
 
 }
 
