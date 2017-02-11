@@ -20,6 +20,9 @@ public slots:
     void setPenColor(const QColor &color);
     void setBrush(QBrush br);
     void updatePath(const QPainterPath &p);
+    void swapBrush();
+
+    QBrush getBrush() const;
 
 public:
     void mousePressEvent( QMouseEvent* ev );

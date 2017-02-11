@@ -30,6 +30,16 @@ void RenderArea::setBrush(QBrush br)
     update();
 }
 
+QBrush RenderArea::getBrush() const {
+    return brush;
+}
+
+void RenderArea::swapBrush() {
+    qDebug("SWAP");
+    QBrush emptyBrush;
+    setBrush((brush == emptyBrush) ? QBrush(QColor("black")) : emptyBrush);
+}
+
 void RenderArea::setPenColor(const QColor &color)
 {
     penColor = color;

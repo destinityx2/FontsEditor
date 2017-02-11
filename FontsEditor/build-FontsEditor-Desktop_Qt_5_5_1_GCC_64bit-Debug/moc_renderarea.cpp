@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_RenderArea_t {
-    QByteArrayData data[14];
-    char stringdata0[116];
+    QByteArrayData data[16];
+    char stringdata0[135];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -42,13 +42,15 @@ QT_MOC_LITERAL(9, 78, 8), // "setBrush"
 QT_MOC_LITERAL(10, 87, 2), // "br"
 QT_MOC_LITERAL(11, 90, 10), // "updatePath"
 QT_MOC_LITERAL(12, 101, 12), // "QPainterPath"
-QT_MOC_LITERAL(13, 114, 1) // "p"
+QT_MOC_LITERAL(13, 114, 1), // "p"
+QT_MOC_LITERAL(14, 116, 9), // "swapBrush"
+QT_MOC_LITERAL(15, 126, 8) // "getBrush"
 
     },
     "RenderArea\0setFillRule\0\0Qt::FillRule\0"
     "rule\0setPenWidth\0width\0setPenColor\0"
     "color\0setBrush\0br\0updatePath\0QPainterPath\0"
-    "p"
+    "p\0swapBrush\0getBrush"
 };
 #undef QT_MOC_LITERAL
 
@@ -58,7 +60,7 @@ static const uint qt_meta_data_RenderArea[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -66,11 +68,13 @@ static const uint qt_meta_data_RenderArea[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   39,    2, 0x0a /* Public */,
-       5,    1,   42,    2, 0x0a /* Public */,
-       7,    1,   45,    2, 0x0a /* Public */,
-       9,    1,   48,    2, 0x0a /* Public */,
-      11,    1,   51,    2, 0x0a /* Public */,
+       1,    1,   49,    2, 0x0a /* Public */,
+       5,    1,   52,    2, 0x0a /* Public */,
+       7,    1,   55,    2, 0x0a /* Public */,
+       9,    1,   58,    2, 0x0a /* Public */,
+      11,    1,   61,    2, 0x0a /* Public */,
+      14,    0,   64,    2, 0x0a /* Public */,
+      15,    0,   65,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
@@ -78,6 +82,8 @@ static const uint qt_meta_data_RenderArea[] = {
     QMetaType::Void, QMetaType::QColor,    8,
     QMetaType::Void, QMetaType::QBrush,   10,
     QMetaType::Void, 0x80000000 | 12,   13,
+    QMetaType::Void,
+    QMetaType::QBrush,
 
        0        // eod
 };
@@ -93,6 +99,9 @@ void RenderArea::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 2: _t->setPenColor((*reinterpret_cast< const QColor(*)>(_a[1]))); break;
         case 3: _t->setBrush((*reinterpret_cast< QBrush(*)>(_a[1]))); break;
         case 4: _t->updatePath((*reinterpret_cast< const QPainterPath(*)>(_a[1]))); break;
+        case 5: _t->swapBrush(); break;
+        case 6: { QBrush _r = _t->getBrush();
+            if (_a[0]) *reinterpret_cast< QBrush*>(_a[0]) = _r; }  break;
         default: ;
         }
     }
@@ -123,13 +132,13 @@ int RenderArea::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 5)
+        if (_id < 7)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 5;
+        _id -= 7;
     }
     return _id;
 }

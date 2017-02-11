@@ -23,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 void MainWindow::configureMenu() {
+
+    // Create menu
     QMenu *file = menuBar()->addMenu(tr("&File"));
     QAction *save = file->addAction(tr("&Save"));
     QAction *load = file->addAction(tr("&Load"));
@@ -30,7 +32,8 @@ void MainWindow::configureMenu() {
     QMenu *edit = menuBar()->addMenu(tr("&Edit"));
 
     QAction *undo = edit->addAction(tr("&Undo"));
-    QAction *changFillingeMode = edit->addAction(tr("Change Filling Mode"));
+    QAction *changeFillingeMode = edit->addAction(tr("&Change Filling Mode"));
+    QAction *startNewContour = edit->addAction(tr("&Start New Contour"));
 
     edit->addSeparator();
 
@@ -38,7 +41,8 @@ void MainWindow::configureMenu() {
     QMenu *copy = edit->addMenu(tr("&Copy"));
     QMenu *move = edit->addMenu(tr("&Move"));
 
-
+    // Add connections
+    connect(changeFillingeMode, SIGNAL(triggered(bool)), area, SLOT(swapBrush()));
 }
 
 void MainWindow::paintEvent(QPaintEvent *) {
