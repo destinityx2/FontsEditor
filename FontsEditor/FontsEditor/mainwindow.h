@@ -6,6 +6,7 @@
 #include <QPainter>
 #include <QPainterPath>
 #include <QBoxLayout>
+#include <QMainWindow>
 
 #include <vector>
 #include <algorithm>
@@ -16,20 +17,21 @@ namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QWidget
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
     explicit MainWindow(QWidget *parent = 0);
     void paintEvent(QPaintEvent *e);
-    void mousePressEvent( QMouseEvent* ev );
     ~MainWindow();
 
 private:
     QPainterPath path;
     RenderArea *area;
     std::vector<QPoint> points;
+
+    void configureMenu();
 };
 
 #endif // MAINWINDOW_H

@@ -5,6 +5,8 @@
 #include <QWidget>
 #include <QBrush>
 
+#include <vector>
+
 class RenderArea : public QWidget
 {
     Q_OBJECT
@@ -19,16 +21,19 @@ public slots:
     void setBrush(QBrush br);
     void updatePath(const QPainterPath &p);
 
+public:
+    void mousePressEvent( QMouseEvent* ev );
+
 protected:
     void paintEvent(QPaintEvent *event);
 
 private:
     QPainterPath path;
-    QColor fillColor1;
-    QColor fillColor2;
     QBrush brush;
     int penWidth;
     QColor penColor;
+
+    std::vector<QPoint> points;
 };
 
 #endif

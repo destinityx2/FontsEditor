@@ -6,34 +6,39 @@
 #include <iostream>
 
 MainWindow::MainWindow(QWidget *parent) :
-    QWidget(parent)
+    QMainWindow(parent)
 {
     path = QPainterPath();
     area = new RenderArea(path);
 
-    QBoxLayout *mainLayout = new QBoxLayout(QBoxLayout::Down);
-    mainLayout->addWidget(area);
+    // QBoxLayout *mainLayout = new QBoxLayout(QBoxLayout::Down);
+    // mainLayout->addWidget(area);
 
-    setLayout(mainLayout);
+    // setLayout(mainLayout);
+    setCentralWidget(area);
+
+    configureMenu();
+
     resize(300, 300);
+}
+
+void MainWindow::configureMenu() {
+    QMenu *file = menuBar()->addMenu(tr("&File"));
+    QAction *save = file->addAction("&Save");
+    QAction *load = file->addAction("&Load");
+
+    QMenu *actions = menuBar()->addMenu(tr("&Actions"));
+
+    QMenu *del = actions->addMenu(tr("&Delete"));
+    QMenu *copy = actions->addMenu(tr("&Copy"));
+    QMenu *move = actions->addMenu(tr("&Move"));
+    actions->addSeparator();
+    QAction *changFillingeMode = actions->addAction(tr("Change Filling Mode"));
+
 }
 
 void MainWindow::paintEvent(QPaintEvent *) {
     qDebug("Repainted MainWindow!");
-}
-
-void MainWindow::mousePressEvent( QMouseEvent* ev ) {
-    QPoint p = ev->pos();
-
-    std::cout << p.x() << " " << p.y() << std::endl;
-    qDebug("Mouse pressed!" + p.x());
-    points.push_back(p);
-    path = QPainterPath(points[0]);
-    for (int i = 1; i < points.size(); ++i)
-        path.lineTo(points[i]);
-
-    area->updatePath(path);
-    update();
 }
 
 

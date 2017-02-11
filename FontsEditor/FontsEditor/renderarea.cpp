@@ -1,5 +1,7 @@
 #include <QtGui>
 
+#include <iostream>
+
 #include "renderarea.h"
 
 RenderArea::RenderArea(const QPainterPath &path, QWidget *parent)
@@ -37,6 +39,19 @@ void RenderArea::setPenColor(const QColor &color)
 void RenderArea::updatePath(const QPainterPath &p) {
     path = p;
     update();
+}
+
+void RenderArea::mousePressEvent( QMouseEvent* ev ) {
+    QPoint p = ev->pos();
+
+    std::cout << p.x() << " " << p.y() << std::endl;
+    qDebug("Mouse pressed!");
+    points.push_back(p);
+    path = QPainterPath(points[0]);
+    for (int i = 1; i < points.size(); ++i)
+        path.lineTo(points[i]);
+
+    updatePath(path);
 }
 
 void RenderArea::paintEvent(QPaintEvent *)
