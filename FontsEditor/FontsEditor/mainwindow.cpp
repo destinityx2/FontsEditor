@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     configureMenu();
 
-    resize(300, 300);
+    resize(WINDOW_WIDTH, WINDOW_HEIGHT);
 }
 
 void MainWindow::configureMenu() {

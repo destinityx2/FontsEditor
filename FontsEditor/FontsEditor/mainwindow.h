@@ -32,6 +32,9 @@ public:
     void paintEvent(QPaintEvent *e);
     ~MainWindow();
 
+    const int WINDOW_WIDTH = 300;
+    const int WINDOW_HEIGHT = 300;
+
 private:
     RenderArea *area;
 
