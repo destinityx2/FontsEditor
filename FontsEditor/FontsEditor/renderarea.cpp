@@ -104,21 +104,43 @@ void RenderArea::paintEvent(QPaintEvent *)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    painter.setPen(QPen(QBrush(non_active_pen_color), penWidth, Qt::SolidLine, Qt::RoundCap,
-                        Qt::RoundJoin));
+    QPen activePen = QPen(QBrush(active_pen_color), penWidth, Qt::SolidLine, Qt::RoundCap,
+                          Qt::RoundJoin);
+    QPen nonActivePen = QPen(QBrush(non_active_pen_color), penWidth, Qt::SolidLine, Qt::RoundCap,
+                             Qt::RoundJoin);
+
+    painter.setPen(nonActivePen);
 
     painter.setBrush(brush);
 
+    // Draw lines
     for (int i = 0; i < contours.size(); ++i) {
         if (i == active_contour_index)
-            painter.setPen(QPen(QBrush(active_pen_color), penWidth, Qt::SolidLine, Qt::RoundCap,
-                                Qt::RoundJoin));
+            painter.setPen(activePen);
 
         QPainterPath active_path = constructActivePath(contours[i]);
         painter.drawPath(active_path);
 
         if (i == active_contour_index)
-            painter.setPen(QPen(QBrush(non_active_pen_color), penWidth, Qt::SolidLine, Qt::RoundCap,
-                                Qt::RoundJoin));
+            painter.setPen(nonActivePen);
     }
+
+    // Draw points of active curve
+    QPen penForPoints(Qt::red);
+    penForPoints.setCapStyle(Qt::RoundCap);
+    penForPoints.setWidth(5);
+    painter.setPen(penForPoints);
+
+    Contour c = contours[active_contour_index];
+    for (int i = 0; i < c.size() - 1; ++i) {
+        painter.drawPoint(c.at(i));
+    }
+
+    if (c.size() > 0) {
+        penForPoints.setColor(Qt::green);
+        painter.setPen(penForPoints);
+        painter.drawPoint(c.at(c.size() - 1));
+    }
+
+    painter.setPen(nonActivePen);
 }

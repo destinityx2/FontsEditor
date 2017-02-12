@@ -29,7 +29,7 @@ void MainWindow::configureMenu() {
     edit = menuBar()->addMenu(tr("&Edit"));
 
     undo = edit->addAction(tr("&Undo"));
-    changeFillingeMode = edit->addAction(tr("&Change Filling Mode"));
+//    changeFillingeMode = edit->addAction(tr("&Change Filling Mode"));
     startNewContour = edit->addAction(tr("&Start New Contour"));
 
     edit->addSeparator();
@@ -42,7 +42,7 @@ void MainWindow::configureMenu() {
 
     // Set connections
     connect(undo, SIGNAL(triggered(bool)), area, SLOT(deleteLastPointIfExists()));
-    connect(changeFillingeMode, SIGNAL(triggered(bool)), area, SLOT(swapBrush()));
+//    connect(changeFillingeMode, SIGNAL(triggered(bool)), area, SLOT(swapBrush()));
     connect(startNewContour, SIGNAL(triggered(bool)), this, SLOT(addNewContour()));
 
     connect(area, SIGNAL(activeIndexChanged(int)), this, SLOT(changeActiveIndex(int)));

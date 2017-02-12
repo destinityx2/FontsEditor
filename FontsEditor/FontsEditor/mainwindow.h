@@ -49,7 +49,7 @@ private:
     QMenu *edit;
 
     QAction *undo;
-    QAction *changeFillingeMode;
+//    QAction *changeFillingeMode;
     QAction *startNewContour;
 
     QMenu *del;
