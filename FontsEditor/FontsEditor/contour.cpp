@@ -19,6 +19,10 @@ QPoint Contour::at(int i) {
     return points[i];
 }
 
+void Contour::set(int i, QPoint p) {
+    points[i] = p;
+}
+
 void Contour::push(QPoint p) {
     points.push_back(p);
 }

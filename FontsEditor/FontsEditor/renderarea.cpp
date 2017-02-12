@@ -71,6 +71,22 @@ void RenderArea::deleteActiveContour() {
     changeActiveContour(0);
 }
 
+void RenderArea::copyActiveContour() {
+    contours.push_back(contours[active_contour_index]);
+    update();
+}
+
+void RenderArea::moveActiveContour(int dx, int dy) {
+    QPoint dif(dx, dy);
+
+    Contour &c = contours[active_contour_index];
+    for (int i = 0; i < c.size(); ++i) {
+        c.set(i, c.at(i) + dif);
+    }
+
+    update();
+}
+
 void RenderArea::changeActiveContour(int i) {
     active_contour_index = i;
     update();
@@ -117,6 +133,7 @@ void RenderArea::mousePressEvent( QMouseEvent* ev ) {
 
     update();
 }
+
 
 void RenderArea::paintEvent(QPaintEvent *)
 {

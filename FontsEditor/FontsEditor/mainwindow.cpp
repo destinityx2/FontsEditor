@@ -37,7 +37,6 @@ void MainWindow::configureMenu() {
 
     del = edit->addAction(tr("&Delete"));
     copy = edit->addAction(tr("&Copy"));
-    move = edit->addAction(tr("&Move"));
 
     activeInd = menuBar()->addAction(tr("Active: 0"));
 
@@ -53,12 +52,13 @@ void MainWindow::configureMenu() {
     connect(load, SIGNAL(triggered(bool)), this, SLOT(loadFile()));
 
     connect(del, SIGNAL(triggered(bool)), area, SLOT(deleteActiveContour()));
+    connect(copy, SIGNAL(triggered(bool)), area, SLOT(copyActiveContour()));
 
     // Set shortcuts
     setShortcuts();
 }
 
-// TODO: ADD OPPORTUNITY TO CHANGE PEN SIZE
+// (?)TODO: ADD OPPORTUNITY TO CHANGE PEN SIZE
 /**
  * Output file syntax:
  * <NUMBER_OF_CONTOURS> <ACTIVE_CONTOUR_INDEX>
@@ -147,6 +147,28 @@ void MainWindow::changeActiveIndex(int i) {
 
 void MainWindow::paintEvent(QPaintEvent *) {
     qDebug("Repainted MainWindow!");
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *ev) {
+    const int STEP_SIZE = 3;
+
+    int key = ev->key();
+    int dx = 0;
+    int dy = 0;
+
+    if (key == Qt::Key_Right) {
+        dx = STEP_SIZE;
+    } else if (key == Qt::Key_Left) {
+        dx = -STEP_SIZE;
+    } else if (key == Qt::Key_Up) {
+        dy = -STEP_SIZE;
+    } else if (key == Qt::Key_Down) {
+        dy = STEP_SIZE;
+    }
+
+    if (dx != 0 || dy != 0) {
+        area->moveActiveContour(dx, dy);
+    }
 }
 
 MainWindow::~MainWindow()

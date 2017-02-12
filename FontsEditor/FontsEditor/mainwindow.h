@@ -31,6 +31,7 @@ public slots:
 public:
     explicit MainWindow(QWidget *parent = 0);
     void paintEvent(QPaintEvent *e);
+    void keyPressEvent(QKeyEvent *ev);
     ~MainWindow();
 
     const static int WINDOW_WIDTH = 300;
@@ -55,7 +56,6 @@ private:
 
     QAction *del;
     QAction *copy;
-    QAction *move;
 
     QAction *activeInd;
 };

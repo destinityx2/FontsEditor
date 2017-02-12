@@ -13,8 +13,10 @@ public:
 
     int size() const;
     QPoint at(int i);
+    void set(int i, QPoint p);
     void push(QPoint p);
     void pop();
+
 
 private:
     std::vector<QPoint> points;
