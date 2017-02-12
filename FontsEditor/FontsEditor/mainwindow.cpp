@@ -197,6 +197,12 @@ void MainWindow::keyPressEvent(QKeyEvent *ev) {
     // Process next point
     if (key == Qt::Key_P) {
         area->selectPoint((area->selectedPointIndex() + 1) % area->activeContourSize());
+    } else if (key == Qt::Key_O) {
+        int newInd = area->selectedPointIndex() - 1;
+        if (newInd < 0)
+            newInd += area->activeContourSize();
+
+        area->selectPoint(newInd);
     }
 }
 
