@@ -26,6 +26,7 @@ public slots:
     void addNewActiveContour(Contour c);
     void changeActiveContour(int i);
     void deleteLastPointIfExists();
+    void deleteActiveContour();
 
     void setContours(std::vector<Contour> conts);
 

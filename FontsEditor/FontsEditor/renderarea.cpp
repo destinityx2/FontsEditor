@@ -61,6 +61,16 @@ void RenderArea::addNewActiveContour(Contour c) {
     update();
 }
 
+void RenderArea::deleteActiveContour() {
+    contours.erase(contours.begin() + active_contour_index);
+
+    if (contours.size() == 0) {
+        addNewActiveContour(Contour());
+    }
+
+    changeActiveContour(0);
+}
+
 void RenderArea::changeActiveContour(int i) {
     active_contour_index = i;
     update();

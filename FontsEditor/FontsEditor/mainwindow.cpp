@@ -52,6 +52,8 @@ void MainWindow::configureMenu() {
     connect(save, SIGNAL(triggered(bool)), this, SLOT(saveFile()));
     connect(load, SIGNAL(triggered(bool)), this, SLOT(loadFile()));
 
+    connect(del, SIGNAL(triggered(bool)), area, SLOT(deleteActiveContour()));
+
     // Set shortcuts
     setShortcuts();
 }

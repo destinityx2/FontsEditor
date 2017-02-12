@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_RenderArea_t {
-    QByteArrayData data[19];
-    char stringdata0[217];
+    QByteArrayData data[20];
+    char stringdata0[237];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -43,19 +43,21 @@ QT_MOC_LITERAL(10, 99, 1), // "c"
 QT_MOC_LITERAL(11, 101, 19), // "changeActiveContour"
 QT_MOC_LITERAL(12, 121, 1), // "i"
 QT_MOC_LITERAL(13, 123, 23), // "deleteLastPointIfExists"
-QT_MOC_LITERAL(14, 147, 11), // "setContours"
-QT_MOC_LITERAL(15, 159, 20), // "std::vector<Contour>"
-QT_MOC_LITERAL(16, 180, 5), // "conts"
-QT_MOC_LITERAL(17, 186, 8), // "getBrush"
-QT_MOC_LITERAL(18, 195, 21) // "getActiveContourIndex"
+QT_MOC_LITERAL(14, 147, 19), // "deleteActiveContour"
+QT_MOC_LITERAL(15, 167, 11), // "setContours"
+QT_MOC_LITERAL(16, 179, 20), // "std::vector<Contour>"
+QT_MOC_LITERAL(17, 200, 5), // "conts"
+QT_MOC_LITERAL(18, 206, 8), // "getBrush"
+QT_MOC_LITERAL(19, 215, 21) // "getActiveContourIndex"
 
     },
     "RenderArea\0activeIndexChanged\0\0"
     "setPenWidth\0width\0setBrush\0br\0swapBrush\0"
     "addNewActiveContour\0Contour\0c\0"
     "changeActiveContour\0i\0deleteLastPointIfExists\0"
-    "setContours\0std::vector<Contour>\0conts\0"
-    "getBrush\0getActiveContourIndex"
+    "deleteActiveContour\0setContours\0"
+    "std::vector<Contour>\0conts\0getBrush\0"
+    "getActiveContourIndex"
 };
 #undef QT_MOC_LITERAL
 
@@ -65,7 +67,7 @@ static const uint qt_meta_data_RenderArea[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      10,   14, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -73,18 +75,19 @@ static const uint qt_meta_data_RenderArea[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   64,    2, 0x06 /* Public */,
+       1,    1,   69,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    1,   67,    2, 0x0a /* Public */,
-       5,    1,   70,    2, 0x0a /* Public */,
-       7,    0,   73,    2, 0x0a /* Public */,
-       8,    1,   74,    2, 0x0a /* Public */,
-      11,    1,   77,    2, 0x0a /* Public */,
-      13,    0,   80,    2, 0x0a /* Public */,
-      14,    1,   81,    2, 0x0a /* Public */,
-      17,    0,   84,    2, 0x0a /* Public */,
-      18,    0,   85,    2, 0x0a /* Public */,
+       3,    1,   72,    2, 0x0a /* Public */,
+       5,    1,   75,    2, 0x0a /* Public */,
+       7,    0,   78,    2, 0x0a /* Public */,
+       8,    1,   79,    2, 0x0a /* Public */,
+      11,    1,   82,    2, 0x0a /* Public */,
+      13,    0,   85,    2, 0x0a /* Public */,
+      14,    0,   86,    2, 0x0a /* Public */,
+      15,    1,   87,    2, 0x0a /* Public */,
+      18,    0,   90,    2, 0x0a /* Public */,
+      19,    0,   91,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int,    2,
@@ -96,7 +99,8 @@ static const uint qt_meta_data_RenderArea[] = {
     QMetaType::Void, 0x80000000 | 9,   10,
     QMetaType::Void, QMetaType::Int,   12,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 15,   16,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 16,   17,
     QMetaType::QBrush,
     QMetaType::Int,
 
@@ -116,10 +120,11 @@ void RenderArea::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 4: _t->addNewActiveContour((*reinterpret_cast< Contour(*)>(_a[1]))); break;
         case 5: _t->changeActiveContour((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 6: _t->deleteLastPointIfExists(); break;
-        case 7: _t->setContours((*reinterpret_cast< std::vector<Contour>(*)>(_a[1]))); break;
-        case 8: { QBrush _r = _t->getBrush();
+        case 7: _t->deleteActiveContour(); break;
+        case 8: _t->setContours((*reinterpret_cast< std::vector<Contour>(*)>(_a[1]))); break;
+        case 9: { QBrush _r = _t->getBrush();
             if (_a[0]) *reinterpret_cast< QBrush*>(_a[0]) = _r; }  break;
-        case 9: { int _r = _t->getActiveContourIndex();
+        case 10: { int _r = _t->getActiveContourIndex();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
         default: ;
         }
@@ -160,13 +165,13 @@ int RenderArea::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 11;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 10)
+        if (_id < 11)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 10;
+        _id -= 11;
     }
     return _id;
 }
