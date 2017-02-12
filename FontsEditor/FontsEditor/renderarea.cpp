@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "renderarea.h"
+#include "bspline.h"
 
 RenderArea::RenderArea(QWidget *parent)
     : QWidget(parent), active_pen_color(QColor("black")), non_active_pen_color(QColor("gray"))
@@ -101,8 +102,18 @@ QPainterPath RenderArea::constructActivePath(Contour c) {
     }
 
     active_path.moveTo(c.at(0));
-    for (int i = 1; i < c.size(); ++i)
-        active_path.lineTo(c.at(i));
+
+    const int N = 20;
+    float dt = 1.0f / N;
+
+    for (int i = 1; i < c.size() - 2; ++i) {
+        float t = 0.0f;
+        for (int d = 0; d <= N; ++d) {
+            QPoint p = BSpline::interpolate(c.at(i-1), c.at(i), c.at(i+1), c.at(i+2), t);
+            t += dt;
+            active_path.lineTo(p);
+        }
+    }
 
     return active_path;
 }

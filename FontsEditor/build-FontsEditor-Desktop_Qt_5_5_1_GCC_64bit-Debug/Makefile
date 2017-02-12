@@ -51,12 +51,14 @@ OBJECTS_DIR   = ./
 SOURCES       = ../FontsEditor/main.cpp \
 		../FontsEditor/mainwindow.cpp \
 		../FontsEditor/renderarea.cpp \
-		../FontsEditor/contour.cpp moc_mainwindow.cpp \
+		../FontsEditor/contour.cpp \
+		../FontsEditor/bspline.cpp moc_mainwindow.cpp \
 		moc_renderarea.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		renderarea.o \
 		contour.o \
+		bspline.o \
 		moc_mainwindow.o \
 		moc_renderarea.o
 DIST          = /home/ivan/Program/Qt/5.5/gcc_64/mkspecs/features/spec_pre.prf \
@@ -196,10 +198,12 @@ DIST          = /home/ivan/Program/Qt/5.5/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/ivan/Program/Qt/5.5/gcc_64/mkspecs/features/lex.prf \
 		../FontsEditor/FontsEditor.pro ../FontsEditor/mainwindow.h \
 		../FontsEditor/renderarea.h \
-		../FontsEditor/contour.h ../FontsEditor/main.cpp \
+		../FontsEditor/contour.h \
+		../FontsEditor/bspline.h ../FontsEditor/main.cpp \
 		../FontsEditor/mainwindow.cpp \
 		../FontsEditor/renderarea.cpp \
-		../FontsEditor/contour.cpp
+		../FontsEditor/contour.cpp \
+		../FontsEditor/bspline.cpp
 QMAKE_TARGET  = FontsEditor
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = FontsEditor
@@ -523,8 +527,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../FontsEditor/mainwindow.h ../FontsEditor/renderarea.h ../FontsEditor/contour.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../FontsEditor/main.cpp ../FontsEditor/mainwindow.cpp ../FontsEditor/renderarea.cpp ../FontsEditor/contour.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../FontsEditor/mainwindow.h ../FontsEditor/renderarea.h ../FontsEditor/contour.h ../FontsEditor/bspline.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../FontsEditor/main.cpp ../FontsEditor/mainwindow.cpp ../FontsEditor/renderarea.cpp ../FontsEditor/contour.cpp ../FontsEditor/bspline.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -669,6 +673,7 @@ moc_mainwindow.cpp: /home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QWidget \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qicon.h \
 		../FontsEditor/renderarea.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QBrush \
+		../FontsEditor/contour.h \
 		../FontsEditor/mainwindow.h
 	/home/ivan/Program/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/home/ivan/Program/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/ivan/Programming/C++/FontsEditor/FontsEditor/FontsEditor -I/home/ivan/Program/Qt/5.5/gcc_64/include -I/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets -I/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui -I/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore -I. ../FontsEditor/mainwindow.h -o moc_mainwindow.cpp
 
@@ -776,6 +781,8 @@ moc_renderarea.cpp: /home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QPainterPath 
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qvector2d.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qtouchdevice.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QBrush \
+		../FontsEditor/contour.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/QPoint \
 		../FontsEditor/renderarea.h
 	/home/ivan/Program/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/home/ivan/Program/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/ivan/Programming/C++/FontsEditor/FontsEditor/FontsEditor -I/home/ivan/Program/Qt/5.5/gcc_64/include -I/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets -I/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui -I/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore -I. ../FontsEditor/renderarea.h -o moc_renderarea.cpp
 
@@ -913,6 +920,7 @@ main.o: ../FontsEditor/main.cpp ../FontsEditor/mainwindow.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qicon.h \
 		../FontsEditor/renderarea.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QBrush \
+		../FontsEditor/contour.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QApplication \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qapplication.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qcoreapplication.h \
@@ -1042,45 +1050,22 @@ mainwindow.o: ../FontsEditor/mainwindow.cpp ../FontsEditor/mainwindow.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qicon.h \
 		../FontsEditor/renderarea.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QBrush \
-		ui_mainwindow.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/QVariant \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QAction \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qaction.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qactiongroup.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QApplication \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qapplication.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qcoreapplication.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qeventloop.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qguiapplication.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qinputmethod.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QButtonGroup \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qbuttongroup.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QHeaderView \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qheaderview.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qabstractitemview.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qframe.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qabstractitemmodel.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qitemselectionmodel.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qstyleoption.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qabstractspinbox.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qvalidator.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qregularexpression.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qslider.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qabstractslider.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qstyle.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qtabbar.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qrubberband.h \
+		../FontsEditor/contour.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QMouseEvent \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QShortcut \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qshortcut.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QFileDialog \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qfiledialog.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qdir.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qfileinfo.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qdialog.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/QTextStream \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QMenuBar \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qmenubar.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qmenu.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QStatusBar \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qstatusbar.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QToolBar \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qtoolbar.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QMouseEvent
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qaction.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qactiongroup.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QMenu
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../FontsEditor/mainwindow.cpp
 
 renderarea.o: ../FontsEditor/renderarea.cpp /home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QtGui \
@@ -1392,7 +1377,9 @@ renderarea.o: ../FontsEditor/renderarea.cpp /home/ivan/Program/Qt/5.5/gcc_64/inc
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QWidget \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qwidget.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qsizepolicy.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QBrush
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QBrush \
+		../FontsEditor/contour.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/QPoint
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o renderarea.o ../FontsEditor/renderarea.cpp
 
 contour.o: ../FontsEditor/contour.cpp ../FontsEditor/contour.h \
@@ -1428,6 +1415,9 @@ contour.o: ../FontsEditor/contour.cpp ../FontsEditor/contour.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qmutex.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qnumeric.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o contour.o ../FontsEditor/contour.cpp
+
+bspline.o: ../FontsEditor/bspline.cpp ../FontsEditor/bspline.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bspline.o ../FontsEditor/bspline.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

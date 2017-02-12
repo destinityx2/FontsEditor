@@ -15,10 +15,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     renderarea.cpp \
-    contour.cpp
+    contour.cpp \
+    bspline.cpp
 
 HEADERS  += mainwindow.h \
     renderarea.h \
-    contour.h
+    contour.h \
+    bspline.h
 
 FORMS    +=
