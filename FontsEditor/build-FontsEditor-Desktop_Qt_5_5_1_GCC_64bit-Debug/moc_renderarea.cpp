@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_RenderArea_t {
-    QByteArrayData data[24];
-    char stringdata0[279];
+    QByteArrayData data[27];
+    char stringdata0[332];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -48,11 +48,14 @@ QT_MOC_LITERAL(15, 167, 17), // "copyActiveContour"
 QT_MOC_LITERAL(16, 185, 17), // "moveActiveContour"
 QT_MOC_LITERAL(17, 203, 2), // "dx"
 QT_MOC_LITERAL(18, 206, 2), // "dy"
-QT_MOC_LITERAL(19, 209, 11), // "setContours"
-QT_MOC_LITERAL(20, 221, 20), // "std::vector<Contour>"
-QT_MOC_LITERAL(21, 242, 5), // "conts"
-QT_MOC_LITERAL(22, 248, 8), // "getBrush"
-QT_MOC_LITERAL(23, 257, 21) // "getActiveContourIndex"
+QT_MOC_LITERAL(19, 209, 11), // "selectPoint"
+QT_MOC_LITERAL(20, 221, 19), // "changeSelectedPoint"
+QT_MOC_LITERAL(21, 241, 20), // "selectPointAsDefault"
+QT_MOC_LITERAL(22, 262, 11), // "setContours"
+QT_MOC_LITERAL(23, 274, 20), // "std::vector<Contour>"
+QT_MOC_LITERAL(24, 295, 5), // "conts"
+QT_MOC_LITERAL(25, 301, 8), // "getBrush"
+QT_MOC_LITERAL(26, 310, 21) // "getActiveContourIndex"
 
     },
     "RenderArea\0activeIndexChanged\0\0"
@@ -60,9 +63,10 @@ QT_MOC_LITERAL(23, 257, 21) // "getActiveContourIndex"
     "addNewActiveContour\0Contour\0c\0"
     "changeActiveContour\0i\0deleteLastPointIfExists\0"
     "deleteActiveContour\0copyActiveContour\0"
-    "moveActiveContour\0dx\0dy\0setContours\0"
-    "std::vector<Contour>\0conts\0getBrush\0"
-    "getActiveContourIndex"
+    "moveActiveContour\0dx\0dy\0selectPoint\0"
+    "changeSelectedPoint\0selectPointAsDefault\0"
+    "setContours\0std::vector<Contour>\0conts\0"
+    "getBrush\0getActiveContourIndex"
 };
 #undef QT_MOC_LITERAL
 
@@ -72,7 +76,7 @@ static const uint qt_meta_data_RenderArea[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      13,   14, // methods
+      16,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -80,21 +84,24 @@ static const uint qt_meta_data_RenderArea[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   79,    2, 0x06 /* Public */,
+       1,    1,   94,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    1,   82,    2, 0x0a /* Public */,
-       5,    1,   85,    2, 0x0a /* Public */,
-       7,    0,   88,    2, 0x0a /* Public */,
-       8,    1,   89,    2, 0x0a /* Public */,
-      11,    1,   92,    2, 0x0a /* Public */,
-      13,    0,   95,    2, 0x0a /* Public */,
-      14,    0,   96,    2, 0x0a /* Public */,
-      15,    0,   97,    2, 0x0a /* Public */,
-      16,    2,   98,    2, 0x0a /* Public */,
-      19,    1,  103,    2, 0x0a /* Public */,
-      22,    0,  106,    2, 0x0a /* Public */,
-      23,    0,  107,    2, 0x0a /* Public */,
+       3,    1,   97,    2, 0x0a /* Public */,
+       5,    1,  100,    2, 0x0a /* Public */,
+       7,    0,  103,    2, 0x0a /* Public */,
+       8,    1,  104,    2, 0x0a /* Public */,
+      11,    1,  107,    2, 0x0a /* Public */,
+      13,    0,  110,    2, 0x0a /* Public */,
+      14,    0,  111,    2, 0x0a /* Public */,
+      15,    0,  112,    2, 0x0a /* Public */,
+      16,    2,  113,    2, 0x0a /* Public */,
+      19,    1,  118,    2, 0x0a /* Public */,
+      20,    1,  121,    2, 0x0a /* Public */,
+      21,    0,  124,    2, 0x0a /* Public */,
+      22,    1,  125,    2, 0x0a /* Public */,
+      25,    0,  128,    2, 0x0a /* Public */,
+      26,    0,  129,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int,    2,
@@ -109,7 +116,10 @@ static const uint qt_meta_data_RenderArea[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::Int, QMetaType::Int,   17,   18,
-    QMetaType::Void, 0x80000000 | 20,   21,
+    QMetaType::Void, QMetaType::Int,   12,
+    QMetaType::Void, QMetaType::QPoint,   17,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 23,   24,
     QMetaType::QBrush,
     QMetaType::Int,
 
@@ -132,10 +142,13 @@ void RenderArea::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 7: _t->deleteActiveContour(); break;
         case 8: _t->copyActiveContour(); break;
         case 9: _t->moveActiveContour((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 10: _t->setContours((*reinterpret_cast< std::vector<Contour>(*)>(_a[1]))); break;
-        case 11: { QBrush _r = _t->getBrush();
+        case 10: _t->selectPoint((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 11: _t->changeSelectedPoint((*reinterpret_cast< QPoint(*)>(_a[1]))); break;
+        case 12: _t->selectPointAsDefault(); break;
+        case 13: _t->setContours((*reinterpret_cast< std::vector<Contour>(*)>(_a[1]))); break;
+        case 14: { QBrush _r = _t->getBrush();
             if (_a[0]) *reinterpret_cast< QBrush*>(_a[0]) = _r; }  break;
-        case 12: { int _r = _t->getActiveContourIndex();
+        case 15: { int _r = _t->getActiveContourIndex();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
         default: ;
         }
@@ -176,13 +189,13 @@ int RenderArea::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 13)
+        if (_id < 16)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 13;
+        _id -= 16;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 13)
+        if (_id < 16)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 13;
+        _id -= 16;
     }
     return _id;
 }

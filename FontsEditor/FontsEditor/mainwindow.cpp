@@ -153,24 +153,50 @@ void MainWindow::paintEvent(QPaintEvent *) {
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *ev) {
-    const int STEP_SIZE = 3;
 
+    const int CONTOUR_STEP_SIZE = 3;
+    const int POINT_STEP_SIZE = 1;
+
+    // Process contour
     int key = ev->key();
     int dx = 0;
     int dy = 0;
 
     if (key == Qt::Key_Right) {
-        dx = STEP_SIZE;
+        dx = CONTOUR_STEP_SIZE;
     } else if (key == Qt::Key_Left) {
-        dx = -STEP_SIZE;
+        dx = -CONTOUR_STEP_SIZE;
     } else if (key == Qt::Key_Up) {
-        dy = -STEP_SIZE;
+        dy = -CONTOUR_STEP_SIZE;
     } else if (key == Qt::Key_Down) {
-        dy = STEP_SIZE;
+        dy = CONTOUR_STEP_SIZE;
     }
 
     if (dx != 0 || dy != 0) {
         area->moveActiveContour(dx, dy);
+    }
+
+    // Process point
+    dx = 0;
+    dy = 0;
+
+    if (key == Qt::Key_D) {
+        dx = CONTOUR_STEP_SIZE;
+    } else if (key == Qt::Key_A) {
+        dx = -CONTOUR_STEP_SIZE;
+    } else if (key == Qt::Key_W) {
+        dy = -CONTOUR_STEP_SIZE;
+    } else if (key == Qt::Key_S) {
+        dy = CONTOUR_STEP_SIZE;
+    }
+
+    if (dx != 0 || dy != 0) {
+        area->changeSelectedPoint(QPoint(dx, dy));
+    }
+
+    // Process next point
+    if (key == Qt::Key_P) {
+        area->selectPoint((area->selectedPointIndex() + 1) % area->activeContourSize());
     }
 }
 

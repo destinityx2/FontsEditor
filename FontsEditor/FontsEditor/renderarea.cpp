@@ -6,7 +6,8 @@
 #include "bspline.h"
 
 RenderArea::RenderArea(QWidget *parent)
-    : QWidget(parent), active_pen_color(QColor("black")), non_active_pen_color(QColor("gray"))
+    : QWidget(parent), active_pen_color(QColor("black")),
+      non_active_pen_color(QColor("gray")), selected_pen_color(QColor("blue"))
 {
     penWidth = 1;
     setBackgroundRole(QPalette::Base);
@@ -14,6 +15,8 @@ RenderArea::RenderArea(QWidget *parent)
 
     contours.push_back(Contour());
     changeActiveContour(0);
+
+    selectPointAsDefault();
 }
 
 void RenderArea::setContours(std::vector<Contour> conts) {
@@ -59,6 +62,8 @@ void RenderArea::addNewActiveContour(Contour c) {
     qDebug("New Contour Started!");
     changeActiveContour(contours.size());
     contours.push_back(c);
+
+    selectPointAsDefault();
     update();
 }
 
@@ -70,6 +75,7 @@ void RenderArea::deleteActiveContour() {
     }
 
     changeActiveContour(0);
+    selectPointAsDefault();
 }
 
 void RenderArea::copyActiveContour() {
@@ -92,6 +98,29 @@ void RenderArea::changeActiveContour(int i) {
     active_contour_index = i;
     update();
     emit activeIndexChanged(i);
+    selectPointAsDefault();
+}
+
+int RenderArea::selectedPointIndex() const {
+    return selected_point_index;
+}
+
+int RenderArea::activeContourSize() const {
+    return contours[active_contour_index].size();
+}
+
+void RenderArea::selectPoint(int i) {
+    selected_point_index = i;
+    update();
+}
+
+void RenderArea::changeSelectedPoint(QPoint dx) {
+    if (selected_point_index == -1)
+        return;
+
+    Contour &c = contours[active_contour_index];
+    c.set(selected_point_index, c.at(selected_point_index) + dx);
+    update();
 }
 
 QPainterPath RenderArea::constructActivePath(Contour c) {
@@ -116,6 +145,11 @@ QPainterPath RenderArea::constructActivePath(Contour c) {
     }
 
     return active_path;
+}
+
+void RenderArea::selectPointAsDefault() {
+    selectPoint(contours[active_contour_index].size() - 1);
+    update();
 }
 
 void RenderArea::deleteLastPointIfExists() {
@@ -189,6 +223,13 @@ void RenderArea::paintEvent(QPaintEvent *)
         penForPoints.setColor(Qt::green);
         painter.setPen(penForPoints);
         painter.drawPoint(c.at(c.size() - 1));
+    }
+
+    //Draw selected point
+    if (selected_point_index != -1) {
+        penForPoints.setColor(selected_pen_color);
+        painter.setPen(penForPoints);
+        painter.drawPoint(c.at(selected_point_index));
     }
 
     painter.setPen(nonActivePen);
