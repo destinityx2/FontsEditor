@@ -24,6 +24,8 @@ class MainWindow : public QMainWindow
 public slots:
     void addNewContour();
     void changeActiveIndex(int i);
+    void saveFile() const;
+    void loadFile();
 
 public:
     explicit MainWindow(QWidget *parent = 0);

@@ -20,19 +20,24 @@ public:
     RenderArea(QWidget *parent = 0);
 
 public slots:
-    void setFillRule(Qt::FillRule rule);
     void setPenWidth(int width);
-    void setPenColor(const QColor &color);
     void setBrush(QBrush br);
     void swapBrush();
     void addNewActiveContour(Contour c);
     void changeActiveContour(int i);
     void deleteLastPointIfExists();
 
+    void setContours(std::vector<Contour> conts);
+
     QBrush getBrush() const;
+    int getActiveContourIndex() const;
 
 public:
     void mousePressEvent( QMouseEvent* ev );
+    std::vector<Contour> getContours() const;
+
+    const QColor active_pen_color;
+    const QColor non_active_pen_color;
 
 protected:
     void paintEvent(QPaintEvent *event);
@@ -40,14 +45,11 @@ protected:
 private:
     QBrush brush;
     int penWidth;
-    QColor penColor;
-
-    QPainterPath active_path;
 
     std::vector<Contour> contours;
     int active_contour_index;
 
-    void constructActivePath(Contour c);
+    QPainterPath constructActivePath(Contour c);
 };
 
 #endif

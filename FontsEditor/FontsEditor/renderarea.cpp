@@ -5,7 +5,7 @@
 #include "renderarea.h"
 
 RenderArea::RenderArea(QWidget *parent)
-    : QWidget(parent)
+    : QWidget(parent), active_pen_color(QColor("black")), non_active_pen_color(QColor("gray"))
 {
     penWidth = 1;
     setBackgroundRole(QPalette::Base);
@@ -15,16 +15,23 @@ RenderArea::RenderArea(QWidget *parent)
     changeActiveContour(0);
 }
 
-void RenderArea::setFillRule(Qt::FillRule rule)
-{
-    active_path.setFillRule(rule);
+void RenderArea::setContours(std::vector<Contour> conts) {
+    contours = conts;
     update();
+}
+
+int RenderArea::getActiveContourIndex() const {
+    return active_contour_index;
 }
 
 void RenderArea::setPenWidth(int width)
 {
     penWidth = width;
     update();
+}
+
+std::vector<Contour> RenderArea::getContours() const {
+    return contours;
 }
 
 void RenderArea::setBrush(QBrush br)
@@ -43,16 +50,11 @@ void RenderArea::swapBrush() {
     setBrush((brush == emptyBrush) ? QBrush(QColor("black")) : emptyBrush);
 }
 
-void RenderArea::setPenColor(const QColor &color)
-{
-    penColor = color;
-    update();
-}
-
 void RenderArea::addNewActiveContour(Contour c) {
     qDebug("New Contour Started!");
     changeActiveContour(contours.size());
     contours.push_back(c);
+    update();
 }
 
 void RenderArea::changeActiveContour(int i) {
@@ -60,15 +62,18 @@ void RenderArea::changeActiveContour(int i) {
     emit activeIndexChanged(i);
 }
 
-void RenderArea::constructActivePath(Contour c) {
+QPainterPath RenderArea::constructActivePath(Contour c) {
+    QPainterPath active_path;
+
     if (c.size() == 0) {
-        active_path = QPainterPath();
-        return;
+        return active_path;
     }
 
-    active_path = QPainterPath(c.at(0));
+    active_path.moveTo(c.at(0));
     for (int i = 1; i < c.size(); ++i)
         active_path.lineTo(c.at(i));
+
+    return active_path;
 }
 
 void RenderArea::deleteLastPointIfExists() {
@@ -95,16 +100,25 @@ void RenderArea::mousePressEvent( QMouseEvent* ev ) {
 void RenderArea::paintEvent(QPaintEvent *)
 {
     qDebug("Repainted RenderArea!");
+
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    painter.setPen(QPen(penColor, penWidth, Qt::SolidLine, Qt::RoundCap,
+    painter.setPen(QPen(QBrush(non_active_pen_color), penWidth, Qt::SolidLine, Qt::RoundCap,
                         Qt::RoundJoin));
 
     painter.setBrush(brush);
 
     for (int i = 0; i < contours.size(); ++i) {
-        constructActivePath(contours[i]);
+        if (i == active_contour_index)
+            painter.setPen(QPen(QBrush(active_pen_color), penWidth, Qt::SolidLine, Qt::RoundCap,
+                                Qt::RoundJoin));
+
+        QPainterPath active_path = constructActivePath(contours[i]);
         painter.drawPath(active_path);
+
+        if (i == active_contour_index)
+            painter.setPen(QPen(QBrush(non_active_pen_color), penWidth, Qt::SolidLine, Qt::RoundCap,
+                                Qt::RoundJoin));
     }
 }
