@@ -7,20 +7,27 @@
 
 #include <vector>
 
+#include "contour.h"
+
 class RenderArea : public QWidget
 {
     Q_OBJECT
 
+signals:
+    void activeIndexChanged(int);
+
 public:
-    RenderArea(const QPainterPath &path, QWidget *parent = 0);
+    RenderArea(QWidget *parent = 0);
 
 public slots:
     void setFillRule(Qt::FillRule rule);
     void setPenWidth(int width);
     void setPenColor(const QColor &color);
     void setBrush(QBrush br);
-    void updatePath(const QPainterPath &p);
     void swapBrush();
+    void addNewActiveContour(Contour c);
+    void changeActiveContour(int i);
+    void deleteLastPointIfExists();
 
     QBrush getBrush() const;
 
@@ -31,12 +38,16 @@ protected:
     void paintEvent(QPaintEvent *event);
 
 private:
-    QPainterPath path;
     QBrush brush;
     int penWidth;
     QColor penColor;
 
-    std::vector<QPoint> points;
+    QPainterPath active_path;
+
+    std::vector<Contour> contours;
+    int active_contour_index;
+
+    void constructActivePath(Contour c);
 };
 
 #endif

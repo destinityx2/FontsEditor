@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_RenderArea_t {
-    QByteArrayData data[16];
-    char stringdata0[135];
+    QByteArrayData data[20];
+    char stringdata0[204];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -30,27 +30,33 @@ struct qt_meta_stringdata_RenderArea_t {
 static const qt_meta_stringdata_RenderArea_t qt_meta_stringdata_RenderArea = {
     {
 QT_MOC_LITERAL(0, 0, 10), // "RenderArea"
-QT_MOC_LITERAL(1, 11, 11), // "setFillRule"
-QT_MOC_LITERAL(2, 23, 0), // ""
-QT_MOC_LITERAL(3, 24, 12), // "Qt::FillRule"
-QT_MOC_LITERAL(4, 37, 4), // "rule"
-QT_MOC_LITERAL(5, 42, 11), // "setPenWidth"
-QT_MOC_LITERAL(6, 54, 5), // "width"
-QT_MOC_LITERAL(7, 60, 11), // "setPenColor"
-QT_MOC_LITERAL(8, 72, 5), // "color"
-QT_MOC_LITERAL(9, 78, 8), // "setBrush"
-QT_MOC_LITERAL(10, 87, 2), // "br"
-QT_MOC_LITERAL(11, 90, 10), // "updatePath"
-QT_MOC_LITERAL(12, 101, 12), // "QPainterPath"
-QT_MOC_LITERAL(13, 114, 1), // "p"
-QT_MOC_LITERAL(14, 116, 9), // "swapBrush"
-QT_MOC_LITERAL(15, 126, 8) // "getBrush"
+QT_MOC_LITERAL(1, 11, 18), // "activeIndexChanged"
+QT_MOC_LITERAL(2, 30, 0), // ""
+QT_MOC_LITERAL(3, 31, 11), // "setFillRule"
+QT_MOC_LITERAL(4, 43, 12), // "Qt::FillRule"
+QT_MOC_LITERAL(5, 56, 4), // "rule"
+QT_MOC_LITERAL(6, 61, 11), // "setPenWidth"
+QT_MOC_LITERAL(7, 73, 5), // "width"
+QT_MOC_LITERAL(8, 79, 11), // "setPenColor"
+QT_MOC_LITERAL(9, 91, 5), // "color"
+QT_MOC_LITERAL(10, 97, 8), // "setBrush"
+QT_MOC_LITERAL(11, 106, 2), // "br"
+QT_MOC_LITERAL(12, 109, 9), // "swapBrush"
+QT_MOC_LITERAL(13, 119, 19), // "addNewActiveContour"
+QT_MOC_LITERAL(14, 139, 7), // "Contour"
+QT_MOC_LITERAL(15, 147, 1), // "c"
+QT_MOC_LITERAL(16, 149, 19), // "changeActiveContour"
+QT_MOC_LITERAL(17, 169, 1), // "i"
+QT_MOC_LITERAL(18, 171, 23), // "deleteLastPointIfExists"
+QT_MOC_LITERAL(19, 195, 8) // "getBrush"
 
     },
-    "RenderArea\0setFillRule\0\0Qt::FillRule\0"
-    "rule\0setPenWidth\0width\0setPenColor\0"
-    "color\0setBrush\0br\0updatePath\0QPainterPath\0"
-    "p\0swapBrush\0getBrush"
+    "RenderArea\0activeIndexChanged\0\0"
+    "setFillRule\0Qt::FillRule\0rule\0setPenWidth\0"
+    "width\0setPenColor\0color\0setBrush\0br\0"
+    "swapBrush\0addNewActiveContour\0Contour\0"
+    "c\0changeActiveContour\0i\0deleteLastPointIfExists\0"
+    "getBrush"
 };
 #undef QT_MOC_LITERAL
 
@@ -60,28 +66,38 @@ static const uint qt_meta_data_RenderArea[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       1,       // signalCount
+
+ // signals: name, argc, parameters, tag, flags
+       1,    1,   64,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   49,    2, 0x0a /* Public */,
-       5,    1,   52,    2, 0x0a /* Public */,
-       7,    1,   55,    2, 0x0a /* Public */,
-       9,    1,   58,    2, 0x0a /* Public */,
-      11,    1,   61,    2, 0x0a /* Public */,
-      14,    0,   64,    2, 0x0a /* Public */,
-      15,    0,   65,    2, 0x0a /* Public */,
+       3,    1,   67,    2, 0x0a /* Public */,
+       6,    1,   70,    2, 0x0a /* Public */,
+       8,    1,   73,    2, 0x0a /* Public */,
+      10,    1,   76,    2, 0x0a /* Public */,
+      12,    0,   79,    2, 0x0a /* Public */,
+      13,    1,   80,    2, 0x0a /* Public */,
+      16,    1,   83,    2, 0x0a /* Public */,
+      18,    0,   86,    2, 0x0a /* Public */,
+      19,    0,   87,    2, 0x0a /* Public */,
+
+ // signals: parameters
+    QMetaType::Void, QMetaType::Int,    2,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 3,    4,
-    QMetaType::Void, QMetaType::Int,    6,
-    QMetaType::Void, QMetaType::QColor,    8,
-    QMetaType::Void, QMetaType::QBrush,   10,
-    QMetaType::Void, 0x80000000 | 12,   13,
+    QMetaType::Void, 0x80000000 | 4,    5,
+    QMetaType::Void, QMetaType::Int,    7,
+    QMetaType::Void, QMetaType::QColor,    9,
+    QMetaType::Void, QMetaType::QBrush,   11,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 14,   15,
+    QMetaType::Void, QMetaType::Int,   17,
     QMetaType::Void,
     QMetaType::QBrush,
 
@@ -94,15 +110,27 @@ void RenderArea::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         RenderArea *_t = static_cast<RenderArea *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->setFillRule((*reinterpret_cast< Qt::FillRule(*)>(_a[1]))); break;
-        case 1: _t->setPenWidth((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 2: _t->setPenColor((*reinterpret_cast< const QColor(*)>(_a[1]))); break;
-        case 3: _t->setBrush((*reinterpret_cast< QBrush(*)>(_a[1]))); break;
-        case 4: _t->updatePath((*reinterpret_cast< const QPainterPath(*)>(_a[1]))); break;
+        case 0: _t->activeIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 1: _t->setFillRule((*reinterpret_cast< Qt::FillRule(*)>(_a[1]))); break;
+        case 2: _t->setPenWidth((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 3: _t->setPenColor((*reinterpret_cast< const QColor(*)>(_a[1]))); break;
+        case 4: _t->setBrush((*reinterpret_cast< QBrush(*)>(_a[1]))); break;
         case 5: _t->swapBrush(); break;
-        case 6: { QBrush _r = _t->getBrush();
+        case 6: _t->addNewActiveContour((*reinterpret_cast< Contour(*)>(_a[1]))); break;
+        case 7: _t->changeActiveContour((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 8: _t->deleteLastPointIfExists(); break;
+        case 9: { QBrush _r = _t->getBrush();
             if (_a[0]) *reinterpret_cast< QBrush*>(_a[0]) = _r; }  break;
         default: ;
+        }
+    } else if (_c == QMetaObject::IndexOfMethod) {
+        int *result = reinterpret_cast<int *>(_a[0]);
+        void **func = reinterpret_cast<void **>(_a[1]);
+        {
+            typedef void (RenderArea::*_t)(int );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&RenderArea::activeIndexChanged)) {
+                *result = 0;
+            }
         }
     }
 }
@@ -132,14 +160,21 @@ int RenderArea::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 10;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 10)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 7;
+        _id -= 10;
     }
     return _id;
+}
+
+// SIGNAL 0
+void RenderArea::activeIndexChanged(int _t1)
+{
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_END_MOC_NAMESPACE

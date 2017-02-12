@@ -4,17 +4,20 @@
 
 #include "renderarea.h"
 
-RenderArea::RenderArea(const QPainterPath &path, QWidget *parent)
-    : QWidget(parent), path(path)
+RenderArea::RenderArea(QWidget *parent)
+    : QWidget(parent)
 {
     penWidth = 1;
     setBackgroundRole(QPalette::Base);
-    brush = QBrush(QColor("black"));
+    brush = QBrush();
+
+    contours.push_back(Contour());
+    changeActiveContour(0);
 }
 
 void RenderArea::setFillRule(Qt::FillRule rule)
 {
-    path.setFillRule(rule);
+    active_path.setFillRule(rule);
     update();
 }
 
@@ -35,7 +38,7 @@ QBrush RenderArea::getBrush() const {
 }
 
 void RenderArea::swapBrush() {
-    qDebug("SWAP");
+    qDebug("Brush swapped");
     QBrush emptyBrush;
     setBrush((brush == emptyBrush) ? QBrush(QColor("black")) : emptyBrush);
 }
@@ -46,8 +49,34 @@ void RenderArea::setPenColor(const QColor &color)
     update();
 }
 
-void RenderArea::updatePath(const QPainterPath &p) {
-    path = p;
+void RenderArea::addNewActiveContour(Contour c) {
+    qDebug("New Contour Started!");
+    changeActiveContour(contours.size());
+    contours.push_back(c);
+}
+
+void RenderArea::changeActiveContour(int i) {
+    active_contour_index = i;
+    emit activeIndexChanged(i);
+}
+
+void RenderArea::constructActivePath(Contour c) {
+    if (c.size() == 0) {
+        active_path = QPainterPath();
+        return;
+    }
+
+    active_path = QPainterPath(c.at(0));
+    for (int i = 1; i < c.size(); ++i)
+        active_path.lineTo(c.at(i));
+}
+
+void RenderArea::deleteLastPointIfExists() {
+    Contour &c = contours[active_contour_index];
+    if (c.size() > 0) {
+        c.pop();
+    }
+
     update();
 }
 
@@ -56,12 +85,11 @@ void RenderArea::mousePressEvent( QMouseEvent* ev ) {
 
     std::cout << p.x() << " " << p.y() << std::endl;
     qDebug("Mouse pressed!");
-    points.push_back(p);
-    path = QPainterPath(points[0]);
-    for (int i = 1; i < points.size(); ++i)
-        path.lineTo(points[i]);
 
-    updatePath(path);
+    Contour &c = contours[active_contour_index];
+    c.push(p);
+
+    update();
 }
 
 void RenderArea::paintEvent(QPaintEvent *)
@@ -75,5 +103,8 @@ void RenderArea::paintEvent(QPaintEvent *)
 
     painter.setBrush(brush);
 
-    painter.drawPath(path);
+    for (int i = 0; i < contours.size(); ++i) {
+        constructActivePath(contours[i]);
+        painter.drawPath(active_path);
+    }
 }

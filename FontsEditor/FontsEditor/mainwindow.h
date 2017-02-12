@@ -21,17 +21,37 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+public slots:
+    void addNewContour();
+    void changeActiveIndex(int i);
+
 public:
     explicit MainWindow(QWidget *parent = 0);
     void paintEvent(QPaintEvent *e);
     ~MainWindow();
 
 private:
-    QPainterPath path;
     RenderArea *area;
-    std::vector<QPoint> points;
 
     void configureMenu();
+    void setShortcuts();
+
+    // Menu
+    QMenu *file;
+    QAction *save;
+    QAction *load;
+
+    QMenu *edit;
+
+    QAction *undo;
+    QAction *changeFillingeMode;
+    QAction *startNewContour;
+
+    QMenu *del;
+    QMenu *copy;
+    QMenu *move;
+
+    QAction *activeInd;
 };
 
 #endif // MAINWINDOW_H

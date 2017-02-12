@@ -14,9 +14,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    renderarea.cpp
+    renderarea.cpp \
+    contour.cpp
 
 HEADERS  += mainwindow.h \
-    renderarea.h
+    renderarea.h \
+    contour.h
 
 FORMS    +=

@@ -50,11 +50,13 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../FontsEditor/main.cpp \
 		../FontsEditor/mainwindow.cpp \
-		../FontsEditor/renderarea.cpp moc_mainwindow.cpp \
+		../FontsEditor/renderarea.cpp \
+		../FontsEditor/contour.cpp moc_mainwindow.cpp \
 		moc_renderarea.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		renderarea.o \
+		contour.o \
 		moc_mainwindow.o \
 		moc_renderarea.o
 DIST          = /home/ivan/Program/Qt/5.5/gcc_64/mkspecs/features/spec_pre.prf \
@@ -193,9 +195,11 @@ DIST          = /home/ivan/Program/Qt/5.5/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/ivan/Program/Qt/5.5/gcc_64/mkspecs/features/yacc.prf \
 		/home/ivan/Program/Qt/5.5/gcc_64/mkspecs/features/lex.prf \
 		../FontsEditor/FontsEditor.pro ../FontsEditor/mainwindow.h \
-		../FontsEditor/renderarea.h ../FontsEditor/main.cpp \
+		../FontsEditor/renderarea.h \
+		../FontsEditor/contour.h ../FontsEditor/main.cpp \
 		../FontsEditor/mainwindow.cpp \
-		../FontsEditor/renderarea.cpp
+		../FontsEditor/renderarea.cpp \
+		../FontsEditor/contour.cpp
 QMAKE_TARGET  = FontsEditor
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = FontsEditor
@@ -519,8 +523,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../FontsEditor/mainwindow.h ../FontsEditor/renderarea.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../FontsEditor/main.cpp ../FontsEditor/mainwindow.cpp ../FontsEditor/renderarea.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../FontsEditor/mainwindow.h ../FontsEditor/renderarea.h ../FontsEditor/contour.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../FontsEditor/main.cpp ../FontsEditor/mainwindow.cpp ../FontsEditor/renderarea.cpp ../FontsEditor/contour.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -546,8 +550,7 @@ compiler_rcc_clean:
 compiler_moc_header_make_all: moc_mainwindow.cpp moc_renderarea.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_mainwindow.cpp moc_renderarea.cpp
-moc_mainwindow.cpp: /home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QMainWindow \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qmainwindow.h \
+moc_mainwindow.cpp: /home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QWidget \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qwidget.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qwindowdefs.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
@@ -649,9 +652,23 @@ moc_mainwindow.cpp: /home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QMainWind
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qfiledevice.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qvector2d.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qtouchdevice.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/QPoint \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QPainter \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qpainter.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qtextoption.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qpen.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QPainterPath \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QBoxLayout \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qboxlayout.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qlayout.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qlayoutitem.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qgridlayout.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QMainWindow \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qmainwindow.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qtabwidget.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qicon.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/QPoint \
+		../FontsEditor/renderarea.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QBrush \
 		../FontsEditor/mainwindow.h
 	/home/ivan/Program/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/home/ivan/Program/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/ivan/Programming/C++/FontsEditor/FontsEditor/FontsEditor -I/home/ivan/Program/Qt/5.5/gcc_64/include -I/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets -I/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui -I/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore -I. ../FontsEditor/mainwindow.h -o moc_mainwindow.cpp
 
@@ -758,6 +775,7 @@ moc_renderarea.cpp: /home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QPainterPath 
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qfiledevice.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qvector2d.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qtouchdevice.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QBrush \
 		../FontsEditor/renderarea.h
 	/home/ivan/Program/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/home/ivan/Program/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/ivan/Programming/C++/FontsEditor/FontsEditor/FontsEditor -I/home/ivan/Program/Qt/5.5/gcc_64/include -I/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets -I/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui -I/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore -I. ../FontsEditor/renderarea.h -o moc_renderarea.cpp
 
@@ -776,8 +794,7 @@ compiler_clean: compiler_moc_header_clean
 ####### Compile
 
 main.o: ../FontsEditor/main.cpp ../FontsEditor/mainwindow.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QMainWindow \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qmainwindow.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QWidget \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qwidget.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qwindowdefs.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
@@ -879,9 +896,23 @@ main.o: ../FontsEditor/main.cpp ../FontsEditor/mainwindow.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qfiledevice.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qvector2d.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qtouchdevice.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/QPoint \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QPainter \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qpainter.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qtextoption.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qpen.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QPainterPath \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QBoxLayout \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qboxlayout.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qlayout.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qlayoutitem.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qgridlayout.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QMainWindow \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qmainwindow.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qtabwidget.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qicon.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/QPoint \
+		../FontsEditor/renderarea.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QBrush \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QApplication \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qapplication.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qcoreapplication.h \
@@ -892,8 +923,7 @@ main.o: ../FontsEditor/main.cpp ../FontsEditor/mainwindow.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../FontsEditor/main.cpp
 
 mainwindow.o: ../FontsEditor/mainwindow.cpp ../FontsEditor/mainwindow.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QMainWindow \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qmainwindow.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QWidget \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qwidget.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qwindowdefs.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
@@ -995,12 +1025,23 @@ mainwindow.o: ../FontsEditor/mainwindow.cpp ../FontsEditor/mainwindow.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qfiledevice.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qvector2d.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qtouchdevice.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/QPoint \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QPainter \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qpainter.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qtextoption.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qpen.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QPainterPath \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QBoxLayout \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qboxlayout.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qlayout.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qlayoutitem.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qgridlayout.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QMainWindow \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qmainwindow.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qtabwidget.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qicon.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/QPoint \
 		../FontsEditor/renderarea.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QPainterPath \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QWidget \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QBrush \
 		ui_mainwindow.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/QVariant \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QAction \
@@ -1039,14 +1080,7 @@ mainwindow.o: ../FontsEditor/mainwindow.cpp ../FontsEditor/mainwindow.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qstatusbar.h \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QToolBar \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qtoolbar.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QLabel \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qlabel.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QPicture \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qpicture.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QPainter \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qpainter.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qtextoption.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/qpen.h
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QMouseEvent
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../FontsEditor/mainwindow.cpp
 
 renderarea.o: ../FontsEditor/renderarea.cpp /home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QtGui \
@@ -1357,8 +1391,43 @@ renderarea.o: ../FontsEditor/renderarea.cpp /home/ivan/Program/Qt/5.5/gcc_64/inc
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QPainterPath \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/QWidget \
 		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qwidget.h \
-		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qsizepolicy.h
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtGui/QBrush
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o renderarea.o ../FontsEditor/renderarea.cpp
+
+contour.o: ../FontsEditor/contour.cpp ../FontsEditor/contour.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/QPoint \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qpoint.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		/home/ivan/Program/Qt/5.5/gcc_64/include/QtCore/qnumeric.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o contour.o ../FontsEditor/contour.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

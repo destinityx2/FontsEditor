@@ -4,17 +4,12 @@
 
 #include <QMouseEvent>
 #include <iostream>
+#include <QShortcut>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
-    path = QPainterPath();
-    area = new RenderArea(path);
-
-    // QBoxLayout *mainLayout = new QBoxLayout(QBoxLayout::Down);
-    // mainLayout->addWidget(area);
-
-    // setLayout(mainLayout);
+    area = new RenderArea();
     setCentralWidget(area);
 
     configureMenu();
@@ -23,32 +18,53 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 void MainWindow::configureMenu() {
-
     // Create menu
-    QMenu *file = menuBar()->addMenu(tr("&File"));
-    QAction *save = file->addAction(tr("&Save"));
-    QAction *load = file->addAction(tr("&Load"));
+    file = menuBar()->addMenu(tr("&File"));
+    save = file->addAction(tr("&Save"));
+    load = file->addAction(tr("&Load"));
 
-    QMenu *edit = menuBar()->addMenu(tr("&Edit"));
+    edit = menuBar()->addMenu(tr("&Edit"));
 
-    QAction *undo = edit->addAction(tr("&Undo"));
-    QAction *changeFillingeMode = edit->addAction(tr("&Change Filling Mode"));
-    QAction *startNewContour = edit->addAction(tr("&Start New Contour"));
+    undo = edit->addAction(tr("&Undo"));
+    changeFillingeMode = edit->addAction(tr("&Change Filling Mode"));
+    startNewContour = edit->addAction(tr("&Start New Contour"));
 
     edit->addSeparator();
 
-    QMenu *del = edit->addMenu(tr("&Delete"));
-    QMenu *copy = edit->addMenu(tr("&Copy"));
-    QMenu *move = edit->addMenu(tr("&Move"));
+    del = edit->addMenu(tr("&Delete"));
+    copy = edit->addMenu(tr("&Copy"));
+    move = edit->addMenu(tr("&Move"));
 
-    // Add connections
+    activeInd = menuBar()->addAction(tr("Active: 0"));
+
+    // Set connections
     connect(changeFillingeMode, SIGNAL(triggered(bool)), area, SLOT(swapBrush()));
+    connect(undo, SIGNAL(triggered(bool)), area, SLOT(deleteLastPointIfExists()));
+    connect(startNewContour, SIGNAL(triggered(bool)), this, SLOT(addNewContour()));
+
+    connect(area, SIGNAL(activeIndexChanged(int)), this, SLOT(changeActiveIndex(int)));
+
+
+    // Set shortcuts
+    setShortcuts();
+}
+
+void MainWindow::addNewContour() {
+    area->addNewActiveContour(Contour());
+}
+
+void MainWindow::setShortcuts() {
+    QShortcut *shortcut = new QShortcut(QKeySequence("Ctrl+Z"), this);
+    QObject::connect(shortcut, SIGNAL(activated()), area, SLOT(deleteLastPointIfExists()));
+}
+
+void MainWindow::changeActiveIndex(int i) {
+    activeInd->setText("Active: " + QString::number(i));
 }
 
 void MainWindow::paintEvent(QPaintEvent *) {
     qDebug("Repainted MainWindow!");
 }
-
 
 MainWindow::~MainWindow()
 {
