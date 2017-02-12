@@ -35,9 +35,9 @@ void MainWindow::configureMenu() {
 
     edit->addSeparator();
 
-    del = edit->addMenu(tr("&Delete"));
-    copy = edit->addMenu(tr("&Copy"));
-    move = edit->addMenu(tr("&Move"));
+    del = edit->addAction(tr("&Delete"));
+    copy = edit->addAction(tr("&Copy"));
+    move = edit->addAction(tr("&Move"));
 
     activeInd = menuBar()->addAction(tr("Active: 0"));
 
@@ -47,6 +47,7 @@ void MainWindow::configureMenu() {
     connect(startNewContour, SIGNAL(triggered(bool)), this, SLOT(addNewContour()));
 
     connect(area, SIGNAL(activeIndexChanged(int)), this, SLOT(changeActiveIndex(int)));
+    connect(activeInd, SIGNAL(triggered(bool)), this, SLOT(nextContour()));
 
     connect(save, SIGNAL(triggered(bool)), this, SLOT(saveFile()));
     connect(load, SIGNAL(triggered(bool)), this, SLOT(loadFile()));
@@ -126,6 +127,11 @@ void MainWindow::loadFile() {
 
 void MainWindow::addNewContour() {
     area->addNewActiveContour(Contour());
+}
+
+void MainWindow::nextContour() {
+    int nextIndex = (area->getActiveContourIndex() + 1) % area->contoursSize();
+    area->changeActiveContour(nextIndex);
 }
 
 void MainWindow::setShortcuts() {

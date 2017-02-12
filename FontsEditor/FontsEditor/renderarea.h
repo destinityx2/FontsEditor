@@ -35,6 +35,7 @@ public slots:
 public:
     void mousePressEvent( QMouseEvent* ev );
     std::vector<Contour> getContours() const;
+    int contoursSize() const;
 
     const QColor active_pen_color;
     const QColor non_active_pen_color;

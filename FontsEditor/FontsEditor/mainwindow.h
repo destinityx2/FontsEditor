@@ -26,14 +26,15 @@ public slots:
     void changeActiveIndex(int i);
     void saveFile() const;
     void loadFile();
+    void nextContour();
 
 public:
     explicit MainWindow(QWidget *parent = 0);
     void paintEvent(QPaintEvent *e);
     ~MainWindow();
 
-    const int WINDOW_WIDTH = 300;
-    const int WINDOW_HEIGHT = 300;
+    const static int WINDOW_WIDTH = 300;
+    const static int WINDOW_HEIGHT = 300;
 
 private:
     RenderArea *area;
@@ -52,9 +53,9 @@ private:
 //    QAction *changeFillingeMode;
     QAction *startNewContour;
 
-    QMenu *del;
-    QMenu *copy;
-    QMenu *move;
+    QAction *del;
+    QAction *copy;
+    QAction *move;
 
     QAction *activeInd;
 };

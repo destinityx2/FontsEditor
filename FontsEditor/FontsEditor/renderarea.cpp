@@ -24,6 +24,10 @@ int RenderArea::getActiveContourIndex() const {
     return active_contour_index;
 }
 
+int RenderArea::contoursSize() const {
+    return contours.size();
+}
+
 void RenderArea::setPenWidth(int width)
 {
     penWidth = width;
@@ -59,6 +63,7 @@ void RenderArea::addNewActiveContour(Contour c) {
 
 void RenderArea::changeActiveContour(int i) {
     active_contour_index = i;
+    update();
     emit activeIndexChanged(i);
 }
 
