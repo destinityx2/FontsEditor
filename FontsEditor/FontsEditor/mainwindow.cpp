@@ -139,6 +139,9 @@ void MainWindow::nextContour() {
 void MainWindow::setShortcuts() {
     QShortcut *shortcut = new QShortcut(QKeySequence("Ctrl+Z"), this);
     QObject::connect(shortcut, SIGNAL(activated()), area, SLOT(deleteLastPointIfExists()));
+
+    shortcut = new QShortcut(QKeySequence("Del"), this);
+    QObject::connect(shortcut, SIGNAL(activated()), area, SLOT(deleteActiveContour()));
 }
 
 void MainWindow::changeActiveIndex(int i) {
