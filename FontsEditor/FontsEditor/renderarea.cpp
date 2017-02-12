@@ -92,7 +92,13 @@ void RenderArea::mousePressEvent( QMouseEvent* ev ) {
     qDebug("Mouse pressed!");
 
     Contour &c = contours[active_contour_index];
-    c.push(p);
+    if (ev->button() == Qt::LeftButton)
+        c.push(p);
+    else if (ev->button() == Qt::RightButton) {
+        if (c.size() > 0) {
+            c.push(c.at(0));
+        }
+    }
 
     update();
 }
