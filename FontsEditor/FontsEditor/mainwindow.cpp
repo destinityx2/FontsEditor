@@ -1,13 +1,14 @@
 #include "mainwindow.h"
 #include "renderarea.h"
 #include "contour.h"
-#include "ui_mainwindow.h"
 
 #include <QMouseEvent>
 #include <iostream>
 #include <QShortcut>
 #include <QFileDialog>
 #include <QTextStream>
+#include <QMenuBar>
+#include <QMenu>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
