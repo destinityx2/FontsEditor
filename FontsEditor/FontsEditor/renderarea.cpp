@@ -4,10 +4,12 @@
 
 #include "renderarea.h"
 #include "bspline.h"
+#include "mainwindow.h"
 
 RenderArea::RenderArea(QWidget *parent)
     : QWidget(parent), active_pen_color(QColor("black")),
-      non_active_pen_color(QColor("gray")), selected_pen_color(QColor("blue"))
+      non_active_pen_color(QColor("gray")), selected_pen_color(QColor("blue")),
+      boundary_line_color(QColor(150, 150, 150))
 {
     penWidth = 1;
     setBackgroundRole(QPalette::Base);
@@ -232,5 +234,17 @@ void RenderArea::paintEvent(QPaintEvent *)
         painter.drawPoint(c.at(selected_point_index));
     }
 
+    // Draw bondary lines
+    const float k = 4.0f / 5.0f;
+
+    penForPoints.setColor(boundary_line_color);
+    painter.setPen(boundary_line_color);
+    painter.drawLine(0, MainWindow::WINDOW_HEIGHT*k, MainWindow::WINDOW_WIDTH, MainWindow::WINDOW_HEIGHT*k);
+    painter.drawLine(MainWindow::WINDOW_WIDTH*k, 0, MainWindow::WINDOW_WIDTH*k, MainWindow::WINDOW_HEIGHT);
+
+
+
     painter.setPen(nonActivePen);
+
+
 }

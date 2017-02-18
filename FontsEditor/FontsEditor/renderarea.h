@@ -50,6 +50,7 @@ public:
     const QColor active_pen_color;
     const QColor non_active_pen_color;
     const QColor selected_pen_color;
+    const QColor boundary_line_color;
 
 protected:
     void paintEvent(QPaintEvent *event);
